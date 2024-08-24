@@ -20,6 +20,8 @@ const state = {
      figmaWaiting: false,
 }
 
+var jsonUrl = null;
+
 var data = {
      name: '',
      id: '',
@@ -60,7 +62,14 @@ fields.readyButton.addEventListener('click', () => {
           data.name = fields.name.value;
           data.id = fields.id.value;
           data.canva.url = fields.canvaUrl.value;
-          downloadJSON(data);
+          var endURL = clearURL(data.id + "-" + data.name + ".json");
+          downloadJSON(data, endURL);
+
+          jsonUrl = "https://raw.githubusercontent.com/WanderlandAgency/reeeads-data/main/data/" + endURL;
+          copyField.innerHTML = jsonUrl;
+          hidden.forEach((element) => {
+               element.style.display = 'block';
+          });
      }
 });
 
@@ -71,15 +80,22 @@ document.addEventListener('click', (event) => {
                fields.figmaButton.innerHTML = 'Click on me !';
           }
      }
+     if(event.target === copyField) {
+          navigator.clipboard.writeText(jsonUrl);
+          copyField.innerHTML = "Copied !";
+          setTimeout(() => {
+               copyField.innerHTML = jsonUrl;
+          }, 2000);
+     }
 });
 
-function downloadJSON(data) {
+function downloadJSON(data, filename) {
      const jsonString = JSON.stringify(data);
      const blob = new Blob([jsonString], { type: 'application/json' });
      const url = URL.createObjectURL(blob);
      const a = document.createElement('a');
      a.href = url;
-     a.download = 'data.json';
+     a.download = filename;
      document.body.appendChild(a);
      a.click();
      URL.revokeObjectURL(url);
@@ -91,4 +107,8 @@ function escapeXml(xml) {
                .replace(/>/g, '&gt;')
                .replace(/"/g, '&quot;')
                .replace(/'/g, '&#39;');
- }
+}
+
+function clearURL(str) {
+     return str.replace(/\s+/g, '-').toLowerCase();
+}
