@@ -2,8 +2,8 @@ var items = document.querySelectorAll('[reeeads-data]')
 const itemsData = {};
 const nextButton = document.querySelector('[reeeads-button="next"]');
 const prevButton = document.querySelector('[reeeads-button="previous"]');
-let filterButtons = item.getElementsByClassName('ad-category__tag');
-let resetButton = item.querySelector('.reset-button');
+let filterButtons = document.getElementsByClassName('ad-category__tag');
+let resetButton = document.querySelector('.reset-button');
 // INIT SCRIPT
 loadScript();
 
