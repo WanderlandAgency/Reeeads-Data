@@ -2,9 +2,29 @@ var items = document.querySelectorAll('[reeeads-data]')
 const itemsData = {};
 const nextButton = document.querySelector('[reeeads-button="next"]');
 const prevButton = document.querySelector('[reeeads-button="previous"]');
-
+let filterButtons = item.getElementsByClassName('ad-category__tag');
+let resetButton = item.querySelector('.reset-button');
 // INIT SCRIPT
 loadScript();
+
+
+// IF FILTER BUTTON IS CLICKED THEN RELOAD SCRIPT
+filterButtons.forEach((button) => {
+     button.addEventListener('click', (e) => {
+          setTimeout(() => {
+               items = document.querySelectorAll('[reeeads-data]');
+               loadScript();
+          }, 300); 
+     });
+});
+
+// IF RESET BUTTON IS CLICKED THEN RELOAD SCRIPT
+resetButton.addEventListener('click', (e) => {
+     setTimeout(() => {
+          items = document.querySelectorAll('[reeeads-data]');
+          loadScript();
+     }, 300); 
+});
 
 // IF NEXT BUTTON IS CLICKED THEN RELOAD SCRIPT
 nextButton.addEventListener('click', (e) => {
